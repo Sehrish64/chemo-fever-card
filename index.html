@@ -98,7 +98,7 @@ dt{color:#4a5a75}dd{margin:0;font-weight:600;overflow-wrap:anywhere}
  </section>
 </div>
 </main>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
+<script src="qrcode.min.js"></script>
 <script>
 const $ = id => document.getElementById(id);
 const IDS = ['temp','name','regimen','lastDose','onc','phone','hospital','allergy','ec','ecPhone','lang'];
@@ -106,15 +106,15 @@ const KEY = 'chemo-fever-card:v1';
 
 const T = {
   roman: { dir:'ltr', title:'Chemo ke dauran bukhar = emergency',
-    body: t => `Bukhar ${t}°C ya us se zyada ho to foran nazdeeki emergency jayein aur yeh card dikhayein. Apne oncologist ko bhi phone karein.`,
+    body: (t,h) => `Bukhar ${t}°C ya us se zyada ho to foran ${h ? h+' ki emergency' : 'nazdeeki emergency'} jayein aur yeh card dikhayein. Apne oncologist ko bhi phone karein.`,
     name:'Naam', onc:'Oncologist', ec:'Emergency rabta',
     note:'Yeh card aap ki oncology team ki hidayat ki yaad-dahani hai, un ka badal nahi.' },
   urdu: { dir:'rtl', title:'کیموتھراپی کے دوران بخار = ایمرجنسی',
-    body: t => `اگر بخار ${t}°C یا اس سے زیادہ ہو تو فوراً قریبی ایمرجنسی جائیں اور یہ کارڈ دکھائیں۔ اپنے آنکولوجسٹ کو بھی فون کریں۔`,
+    body: (t,h) => `اگر بخار ${t}°C یا اس سے زیادہ ہو تو فوراً ${h ? h+' کی ایمرجنسی' : 'قریبی ایمرجنسی'} جائیں اور یہ کارڈ دکھائیں۔ اپنے آنکولوجسٹ کو بھی فون کریں۔`,
     name:'نام', onc:'آنکولوجسٹ', ec:'ہنگامی رابطہ',
     note:'یہ کارڈ آپ کی آنکولوجی ٹیم کی ہدایت کی یاد دہانی ہے، اس کا متبادل نہیں۔' },
   en: { dir:'ltr', title:'Fever during chemotherapy = emergency',
-    body: t => `If your temperature is ${t}°C or higher, go to the nearest emergency department now and show this card. Also call your oncologist.`,
+    body: (t,h) => `If your temperature is ${t}°C or higher, go to ${h ? 'the emergency department at '+h : 'the nearest emergency department'} now and show this card. Also call your oncologist.`,
     name:'Name', onc:'Oncologist', ec:'Emergency contact',
     note:'This card reminds you of your oncology team\'s advice. It does not replace it.' }
 };
@@ -144,7 +144,7 @@ function render() {
   $('cardP').innerHTML = `
     <div class="band ${L.dir === 'rtl' ? 'rtl' : ''}" dir="${L.dir}">${esc(L.title)}</div>
     <div class="cb ${L.dir === 'rtl' ? 'rtl' : ''}" dir="${L.dir}">
-      <p>${esc(L.body(t))}</p>
+      <p>${esc(L.body(t, v('hospital')))}</p>
       <div class="big">${esc(t)}°C</div>
       <dl>${row(L.name, v('name'))}${row(L.onc, join(v('onc'), v('phone')))}${row(L.ec, join(v('ec'), v('ecPhone')))}</dl>
       <div class="note">${esc(L.note)}</div>
