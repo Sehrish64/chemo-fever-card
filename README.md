@@ -1,6 +1,6 @@
 # Chemo Fever Card
 
-> ⚠️ **WORK IN PROGRESS — review pending.** The card wording (Urdu and English) has **not** yet been reviewed by an oncologist or oncology nurse. Do not promote this to patients until that review is done.
+> ✅ **Wording reviewed by a doctor, Oct 2026.** The card wording (Roman Urdu, اردو and English) was reviewed and approved, with one fix applied (the patient side now names the patient's specific hospital instead of "nearest emergency").
 
 Free, no-server wallet card generator for people on chemotherapy.
 
@@ -20,19 +20,18 @@ Examples of the hospital cards this is modelled on:
 ## Important
 
 - The app **does not give medical advice** and has **no default fever threshold**. The patient or caregiver must enter the number their own oncology team gave them (it differs between hospitals).
-- Before sharing the card wording, have it reviewed by an oncologist or oncology nurse.
+- **Apni oncology team ki hidayat follow karein — yeh app unka badal nahi.** This card is a reminder of your oncology team's advice; it does not replace it.
 
 ## Run
 
-Open `index.html` in a browser. The QR library loads from cdnjs; to work fully offline, download `qrcode.min.js` (qrcode-generator 1.4.4), put it next to `index.html` and change the `<script src>`.
+Open `index.html` in a browser, or visit the live site. The QR library (`qrcode.min.js`) is bundled locally, so QR generation works fully offline once the page is loaded.
 
 ## Roadmap
 
 - Lock-screen image export (PNG)
 - Installable PWA, offline
-- Reviewed Urdu wording with a Pakistani oncology nurse
 - More card types (e.g. a discreet HIV medication reminder)
 
 ## License
 
-MIT (add a LICENSE file).
+MIT — see `LICENSE`.
