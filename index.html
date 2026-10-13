@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Chemo Fever Card</title>
+<style>
+:root{--ink:#12233f;--paper:#fbfcfe;--line:#d5dbe6;--soft:#eef2f8;--alert:#c4122f;--teal:#0b6b6b}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+main{max-width:980px;margin:0 auto;padding:20px 16px 48px}
+h1{font-size:1.7rem;line-height:1.2;margin:0 0 6px}
+.lead{margin:0 0 18px;max-width:60ch}
+.grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:24px;align-items:start}
+@media(max-width:800px){.grid{grid-template-columns:1fr}}
+.warn{background:var(--soft);border-left:4px solid var(--teal);padding:10px 12px;margin:0 0 16px;font-size:.92rem}
+label{display:block;font-weight:600;font-size:.9rem;margin:12px 0 4px}
+.hint{font-weight:400;color:#4a5a75}
+input,select{width:100%;font:inherit;padding:9px 10px;border:1px solid var(--line);border-radius:6px;background:#fff;color:var(--ink)}
+input:focus-visible,select:focus-visible,button:focus-visible{outline:3px solid var(--teal);outline-offset:1px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.req{color:var(--alert)}
+.row{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px;align-items:center}
+button{font:inherit;font-weight:700;padding:10px 16px;border-radius:6px;border:1.5px solid var(--ink);background:var(--ink);color:#fff;cursor:pointer}
+button.ghost{background:#fff;color:var(--ink)}
+button:disabled{opacity:.45;cursor:not-allowed}
+.check{display:flex;gap:8px;align-items:flex-start;font-weight:400;margin-top:14px}
+.check input{width:auto;margin-top:5px}
+#msg{font-size:.9rem;color:var(--alert);min-height:1.3em;margin-top:8px}
+.cards{display:grid;gap:16px;position:sticky;top:12px}
+.card{background:#fff;border:1.5px solid var(--ink);border-radius:12px;overflow:hidden;font-size:14px;line-height:1.45}
+.band{background:var(--alert);color:#fff;padding:10px 14px;font-weight:800;font-size:17px;line-height:1.25}
+.cb{padding:10px 14px 12px}
+.cb p{margin:0 0 8px}
+.big{font-size:38px;font-weight:800;color:var(--alert);line-height:1.1;margin:2px 0 8px}
+dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:2px 10px}
+dt{color:#4a5a75}dd{margin:0;font-weight:600;overflow-wrap:anywhere}
+.note{font-size:11.5px;color:#4a5a75;margin-top:8px}
+.er{display:grid;grid-template-columns:1fr 96px;gap:10px;align-items:start}
+.qr svg{width:96px;height:96px;display:block}
+.rtl{direction:rtl;text-align:right;line-height:1.9;font-family:"Noto Nastaliq Urdu","Jameel Noori Nastaleeq","Noto Naskh Arabic",system-ui,serif}
+.rtl dt,.rtl .note{font-size:13px}
+@media print{
+ body{background:#fff}
+ .noprint{display:none!important}
+ main{padding:0;max-width:none}
+ .grid{display:block}
+ .cards{position:static;display:block}
+ .card{width:100mm;margin:0 0 8mm;break-inside:avoid;border-style:dashed}
+}
+</style>
+</head>
+<body>
+<main>
+<div class="noprint">
+ <h1>Chemo Fever Card</h1>
+ <p class="lead">Chemo ke mareez ke liye wallet card: ek side patient ke liye, doosri emergency staff ke liye (English), saath mein QR. Sab kuch sirf aap ke browser mein rehta hai.</p>
+</div>
+<div class="grid">
+ <section class="noprint" aria-label="Form">
+  <p class="warn">Bukhar ki had aur hidayat <strong>apni oncology team se poochh kar</strong> likhein. Yeh app koi medical salah nahi deta, sirf aap ki di hui maloomat card par chhapta hai.</p>
+  <label for="temp">Bukhar ki had (°C) <span class="req">*</span> <span class="hint">oncologist ne jo batayi</span></label>
+  <input id="temp" inputmode="decimal" placeholder="e.g. 38.0">
+  <label for="name">Patient ka naam</label>
+  <input id="name" autocomplete="off">
+  <div class="two">
+   <div><label for="regimen">Chemo / regimen</label><input id="regimen" autocomplete="off"></div>
+   <div><label for="lastDose">Aakhri chemo ki tareekh</label><input id="lastDose" type="date"></div>
+  </div>
+  <label for="onc">Oncologist ka naam</label>
+  <input id="onc" autocomplete="off">
+  <label for="phone">Oncologist / hospital ka phone <span class="req">*</span></label>
+  <input id="phone" type="tel" placeholder="+92 ...">
+  <label for="hospital">Hospital</label>
+  <input id="hospital" autocomplete="off">
+  <label for="allergy">Allergies <span class="hint">(agar hain)</span></label>
+  <input id="allergy" autocomplete="off">
+  <div class="two">
+   <div><label for="ec">Emergency contact</label><input id="ec" autocomplete="off"></div>
+   <div><label for="ecPhone">Un ka phone</label><input id="ecPhone" type="tel"></div>
+  </div>
+  <label for="lang">Patient side ki zubaan</label>
+  <select id="lang">
+   <option value="roman">Roman Urdu</option>
+   <option value="urdu">اردو</option>
+   <option value="en">English</option>
+  </select>
+  <label class="check"><input type="checkbox" id="save"> <span>Is device par yaad rakho (sirf is browser mein). Shared phone par na karein.</span></label>
+  <div class="row">
+   <button id="print" disabled>Print / PDF save karein</button>
+   <button id="clear" class="ghost">Sab saaf karein</button>
+  </div>
+  <div id="msg" role="status"></div>
+ </section>
+ <section class="cards" aria-label="Card preview">
+  <div class="card" id="cardP"></div>
+  <div class="card" id="cardE"></div>
+ </section>
+</div>
+</main>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
+<script>
+const $ = id => document.getElementById(id);
+const IDS = ['temp','name','regimen','lastDose','onc','phone','hospital','allergy','ec','ecPhone','lang'];
+const KEY = 'chemo-fever-card:v1';
+
+const T = {
+  roman: { dir:'ltr', title:'Chemo ke dauran bukhar = emergency',
+    body: t => `Bukhar ${t}°C ya us se zyada ho to foran nazdeeki emergency jayein aur yeh card dikhayein. Apne oncologist ko bhi phone karein.`,
+    name:'Naam', onc:'Oncologist', ec:'Emergency rabta',
+    note:'Yeh card aap ki oncology team ki hidayat ki yaad-dahani hai, un ka badal nahi.' },
+  urdu: { dir:'rtl', title:'کیموتھراپی کے دوران بخار = ایمرجنسی',
+    body: t => `اگر بخار ${t}°C یا اس سے زیادہ ہو تو فوراً قریبی ایمرجنسی جائیں اور یہ کارڈ دکھائیں۔ اپنے آنکولوجسٹ کو بھی فون کریں۔`,
+    name:'نام', onc:'آنکولوجسٹ', ec:'ہنگامی رابطہ',
+    note:'یہ کارڈ آپ کی آنکولوجی ٹیم کی ہدایت کی یاد دہانی ہے، اس کا متبادل نہیں۔' },
+  en: { dir:'ltr', title:'Fever during chemotherapy = emergency',
+    body: t => `If your temperature is ${t}°C or higher, go to the nearest emergency department now and show this card. Also call your oncologist.`,
+    name:'Name', onc:'Oncologist', ec:'Emergency contact',
+    note:'This card reminds you of your oncology team\'s advice. It does not replace it.' }
+};
+
+const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const v = id => $(id).value.trim();
+const join = (...a) => a.filter(Boolean).join(' · ');
+const row = (k, val) => val ? `<dt>${esc(k)}</dt><dd>${esc(val)}</dd>` : '';
+
+function parseTemp(raw) {
+  const s = String(raw).trim();
+  if (!/^\d{2}(?:[.,]\d)?$/.test(s)) return null;
+  const n = parseFloat(s.replace(',', '.'));
+  return n >= 34 && n <= 42 ? n : null;
+}
+
+function qrSvg(text) {
+  if (typeof qrcode === 'undefined') return '<div class="note">QR load nahi hua — internet check karein</div>';
+  try { const q = qrcode(0, 'M'); q.addData(text); q.make(); return q.createSvgTag(3, 0); }
+  catch (e) { return '<div class="note">QR ke liye data bohot lamba hai</div>'; }
+}
+
+function render() {
+  const tn = parseTemp(v('temp'));
+  const t = tn !== null ? tn.toFixed(1) : '__';
+  const L = T[v('lang') || 'roman'];
+  $('cardP').innerHTML = `
+    <div class="band ${L.dir === 'rtl' ? 'rtl' : ''}" dir="${L.dir}">${esc(L.title)}</div>
+    <div class="cb ${L.dir === 'rtl' ? 'rtl' : ''}" dir="${L.dir}">
+      <p>${esc(L.body(t))}</p>
+      <div class="big">${esc(t)}°C</div>
+      <dl>${row(L.name, v('name'))}${row(L.onc, join(v('onc'), v('phone')))}${row(L.ec, join(v('ec'), v('ecPhone')))}</dl>
+      <div class="note">${esc(L.note)}</div>
+    </div>`;
+
+  const lines = ['CHEMO ALERT',
+    v('name') && 'Patient: ' + v('name'),
+    'On chemotherapy' + (v('regimen') ? ' (' + v('regimen') + ')' : '') + (v('lastDose') ? ', last dose ' + v('lastDose') : ''),
+    `Fever ${t}C or above: oncology emergency, at risk of neutropenic sepsis`,
+    (v('onc') || v('phone')) && 'Oncologist: ' + join(v('onc'), v('phone')),
+    v('hospital') && 'Hospital: ' + v('hospital'),
+    v('allergy') && 'Allergies: ' + v('allergy'),
+    (v('ec') || v('ecPhone')) && 'Emergency contact: ' + join(v('ec'), v('ecPhone'))
+  ].filter(Boolean);
+  const svg = qrSvg(lines.join('\n'));
+
+  $('cardE').innerHTML = `
+    <div class="band">Attention emergency staff</div>
+    <div class="cb"><div class="er"><div>
+      <p>This patient is receiving chemotherapy and is at risk of neutropenic sepsis. Fever of <strong>${esc(t)}°C or above</strong>: please notify triage, treat as an oncology emergency per hospital protocol, and call the oncologist below.</p>
+      <dl>${row('Patient', v('name'))}${row('Chemo', join(v('regimen'), v('lastDose') && 'last dose ' + v('lastDose')))}${row('Allergies', v('allergy'))}${row('Oncologist', join(v('onc'), v('phone')))}${row('Hospital', v('hospital'))}${row('Contact', join(v('ec'), v('ecPhone')))}</dl>
+      </div><div class="qr" title="Scan for the same details as text">${svg}</div></div>
+      <div class="note">Card details were entered by the patient or family from their oncology team's advice.</div>
+    </div>`;
+
+  const ok = tn !== null && v('phone');
+  $('print').disabled = !ok;
+  $('msg').textContent = ok ? '' : (v('temp') && tn === null
+    ? 'Bukhar ki had sirf number mein likhein (34 se 42 ke darmiyan), jaise 38.0 ya 38,0.'
+    : 'Print ke liye bukhar ki had aur phone number zaroori hain.');
+  persist();
+}
+
+function persist() {
+  try {
+    if ($('save').checked) {
+      const d = {}; IDS.forEach(i => d[i] = $(i).value);
+      localStorage.setItem(KEY, JSON.stringify(d));
+    }
+  } catch (e) {}
+}
+
+function restore() {
+  try {
+    const d = JSON.parse(localStorage.getItem(KEY) || 'null');
+    if (d) { IDS.forEach(i => { if (d[i] != null) $(i).value = d[i]; }); $('save').checked = true; }
+  } catch (e) {}
+}
+
+IDS.forEach(i => $(i).addEventListener('input', render));
+$('lang').addEventListener('change', render);
+$('save').addEventListener('change', () => {
+  if (!$('save').checked) { try { localStorage.removeItem(KEY); } catch (e) {} } else persist();
+});
+$('clear').addEventListener('click', () => {
+  IDS.forEach(i => { if (i !== 'lang') $(i).value = ''; });
+  $('save').checked = false;
+  try { localStorage.removeItem(KEY); } catch (e) {}
+  render();
+});
+$('print').addEventListener('click', () => window.print());
+
+restore();
+render();
+</script>
+</body>
+</html>
